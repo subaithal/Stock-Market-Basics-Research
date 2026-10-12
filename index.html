@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TCS Stock Analysis | NSE India</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08111F;--bg2:#0d1b30;--card:rgba(255,255,255,.055);--bd:rgba(255,255,255,.1);--tx:#e8eefc;--mu:#93a4c3;--bl:#3B82F6;--gr:#10B981;--cy:#22D3EE;--rd:#F87171;--nav:rgba(8,17,31,.75)}
+[data-theme=light]{--bg:#eef3fb;--bg2:#fff;--card:rgba(255,255,255,.75);--bd:rgba(15,30,60,.12);--tx:#0b1a33;--mu:#51617f;--nav:rgba(238,243,251,.85)}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{font:16px/1.65 Inter,system-ui,sans-serif;color:var(--tx);background:radial-gradient(900px 500px at 85% -5%,rgba(59,130,246,.22),transparent),radial-gradient(700px 500px at -5% 30%,rgba(34,211,238,.12),transparent),var(--bg);background-attachment:fixed}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif;line-height:1.2}
+nav{position:sticky;top:0;z-index:9;display:flex;align-items:center;gap:6px;padding:12px 4vw;background:var(--nav);backdrop-filter:blur(14px);border-bottom:1px solid var(--bd)}
+.logo{font-weight:800;margin-right:auto;font-size:18px}.logo b{color:var(--cy)}
+nav a{color:var(--mu);text-decoration:none;padding:6px 11px;border-radius:99px;font-size:14px;transition:.25s}nav a:hover{color:var(--tx);background:var(--card)}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:99px;padding:7px 14px;transition:.25s}button:hover{border-color:var(--cy);box-shadow:0 0 16px rgba(34,211,238,.35)}
+.pri{background:linear-gradient(135deg,var(--bl),var(--cy));color:#04101f;border:0;font-weight:700}
+section{padding:80px 6vw;max-width:1180px;margin:auto}
+.ey{color:var(--cy);text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700}
+h2{font-size:clamp(26px,4vw,38px);margin:6px 0 14px}p.lead{color:var(--mu);max-width:760px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:22px;backdrop-filter:blur(16px);transition:.3s;box-shadow:0 10px 40px rgba(0,0,0,.18)}
+.card:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.45)}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin-top:22px}
+.k{color:var(--mu);font-size:13px}.v{font-size:28px;font-weight:800;margin:4px 0}.s{font-size:12px;color:var(--mu)}
+.dn{color:var(--rd)}.up{color:var(--gr)}
+#hero{padding-top:90px}#hero h1{font-size:clamp(36px,6vw,64px);background:linear-gradient(120deg,#fff,var(--cy) 60%,var(--bl));-webkit-background-clip:text;background-clip:text;color:transparent}
+[data-theme=light] #hero h1{background:linear-gradient(120deg,#0b1a33,var(--bl));-webkit-background-clip:text;background-clip:text}
+.badge{display:inline-block;border:1px solid var(--bd);background:var(--card);border-radius:99px;padding:4px 12px;font-size:12px;color:var(--gr);margin-bottom:14px}
+.two{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:20px}
+.chart{width:100%;position:relative}.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:#0b1a33;color:#fff;border:1px solid var(--cy);border-radius:10px;padding:6px 10px;font-size:12px;opacity:0;transition:.15s;white-space:nowrap}
+ul{padding-left:20px;color:var(--mu)}li{margin:5px 0}
+.note{border-left:3px solid var(--cy);padding:10px 14px;background:var(--card);border-radius:0 12px 12px 0;font-size:14px;color:var(--mu);margin-top:16px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px 10px;border-bottom:1px solid var(--bd);text-align:left}th{color:var(--mu);font-weight:600}
+a.ref{color:var(--cy)}footer{text-align:center;padding:30px;color:var(--mu);font-size:13px;border-top:1px solid var(--bd)}
+.rv{opacity:0;transform:translateY(24px);transition:.8s}.rv.on{opacity:1;transform:none}
+#report{display:none}
+@media(max-width:780px){nav a{display:none}section{padding:60px 5vw}}
+/* ---- print: only the A4 report ---- */
+@page{size:A4;margin:13mm}
+@media print{
+body>*:not(#report){display:none!important}
+body{background:#fff!important;color:#000;font:10pt/1.4 'Times New Roman',serif}
+#report{display:block;color:#000;--mu:#333;--bd:#999;--tx:#000}
+#report h1{font-size:19pt;text-align:center;margin-bottom:2pt}#report h2{font-size:12pt;margin:9pt 0 3pt;border-bottom:1px solid #000;color:#000;-webkit-text-fill-color:#000}
+#report p,#report li{font-size:10pt;color:#000;margin:3pt 0}#report .sub{text-align:center;font-size:9pt}
+#report table{font-size:9pt}#report th,#report td{padding:2pt 5pt;border:1px solid #777;color:#000}
+#report .chart{break-inside:avoid;max-width:100%}#report svg text{fill:#000!important}#report .c2{display:grid;grid-template-columns:1fr 1fr;gap:8pt}
+.pb{break-before:page}}
+</style></head><body>
+<nav><span class="logo">TCS<b>·Analytics</b></span>
+<a href="#overview">Overview</a><a href="#trend">Price Trends</a><a href="#metrics">Metrics</a><a href="#dividends">Dividends</a><a href="#growth">Growth</a><a href="#sources">Sources</a>
+<button id="th" title="Toggle theme">◐</button></nav>
+
+<section id="hero" class="rv"><span class="badge">● NSE: TCS · BSE: 532540 · Task 2 – Company Stock Analysis</span>
+<h1>Tata Consultancy Services<br>Stock Analysis</h1>
+<p class="lead" style="margin-top:14px">TCS is India's largest IT services company and a flagship of the Tata Group. This dashboard reviews its recent share price, valuation and dividend record using dated public data.</p>
+<div class="grid">
+<div class="card"><div class="k">Last close (9 Oct 2026)</div><div class="v">₹2,156.00</div><div class="s">NSE · ICICI Direct / Yahoo Finance</div></div>
+<div class="card"><div class="k">Market capitalisation</div><div class="v">₹7.80 L Cr</div><div class="s">≈ ₹7,80,060 crore · 9 Oct 2026</div></div>
+<div class="card"><div class="k">P/E ratio (TTM)</div><div class="v">15.1×</div><div class="s">15.09 – 15.11 across sources</div></div>
+<div class="card"><div class="k">1-year return (reported)</div><div class="v dn">≈ −29%</div><div class="s">−28.8% to −31.3% by source</div></div></div>
+<div class="note">Data note: figures come from financial portals quoting NSE prices (see Sources), not live feeds. Check NSE/BSE before relying on any number.</div></section>
+
+<section id="overview" class="rv"><div class="ey">Company Overview</div><h2>What TCS Does</h2>
+<p class="lead">TCS provides IT services, consulting and business solutions to large global enterprises. Its offering combines consulting, technology services, engineering and industry solutions that help clients modernise their systems and run them efficiently.</p>
+<div class="grid">
+<div class="card"><h3>IT Services</h3><p class="s">Application development, maintenance, infrastructure and managed services for banks, retailers, manufacturers and others.</p></div>
+<div class="card"><h3>Consulting</h3><p class="s">Advice on business and technology strategy, including transformation programmes.</p></div>
+<div class="card"><h3>Ownership</h3><p class="s">Tata Sons held about 71.7% of equity at 31 March 2026. TCS listed in 2004 in what was then India's largest private-sector IPO.</p></div>
+<div class="card"><h3>Listing</h3><p class="s">NSE symbol TCS; BSE code 532540; a large-cap stock in the IT-software sector.</p></div></div></section>
+
+<section id="trend" class="rv"><div class="ey">Price Trends</div><h2>Share Price Trend: 2026 Snapshots</h2>
+<p class="lead">Hover over the line to see each dated price point.</p>
+<div class="card" style="margin-top:20px"><div class="chart" id="c1"></div>
+<div class="grid" id="tstat"></div></div>
+<div class="note"><b>Disclosure:</b> A complete, verified monthly closing series for the full 12 months could not be confirmed from free public pages. The chart therefore uses only dated prices found on public sources (1 Jan – 9 Oct 2026, about 9 months) and connects them with straight lines; it does not show day-to-day moves. Portals report the 1-year fall at roughly 29–31%. The 52-week range is ₹1,976.80 – ₹3,350.00 (Yahoo Finance, 9 Oct 2026).</div>
+<h3 style="margin-top:22px">Trend explanation</h3>
+<p class="lead">The share started 2026 near ₹3,200, then moved lower through April and May and stayed near ₹2,100–₹2,300 from late August. On 9 October 2026 it rose 3.85% in a day to ₹2,156. The causes are not verified here. Commonly discussed reasons are cautious global technology spending and investor worry that AI may change demand for traditional IT services. One portal reports that the Nifty IT index fell about 26% in a year.</p></section>
+
+<section id="metrics" class="rv"><div class="ey">Financial Metrics</div><h2>Valuation Snapshot</h2>
+<div class="grid">
+<div class="card"><div class="k">Latest share price</div><div class="v">₹2,156.00</div><div class="s">NSE close, 9 Oct 2026</div></div>
+<div class="card"><div class="k">Market capitalisation</div><div class="v">₹7,80,060 Cr</div><div class="s">Tickertape / ICICI Direct, 9 Oct 2026</div></div>
+<div class="card"><div class="k">P/E ratio (TTM)</div><div class="v">15.09</div><div class="s">ICICI Direct; Yahoo shows 15.11</div></div>
+<div class="card"><div class="k">Dividend yield</div><div class="v up">5.09%</div><div class="s">ICICI Direct; includes special payouts</div></div></div>
+<div class="note">Why it matters: a P/E near 15 is lower than the 17–24 levels quoted by the same type of sources earlier in 2026 (e.g. 23.86 on 28 Jan; 17.98 on 28 Apr), showing that the market now pays less per rupee of earnings. P/E and market cap change daily.</div></section>
+
+<section id="dividends" class="rv"><div class="ey">Dividend History</div><h2>Dividend per Share: FY22 – FY26</h2>
+<div class="two"><div class="card"><div class="chart" id="c2"></div></div>
+<div class="card"><table id="dt"></table></div></div>
+<p class="lead" style="margin-top:18px">Total dividends over five years were ₹467 per share, an average of ₹93.4 a year. Payments rose from ₹43 in FY22 to ₹126 in FY25, then eased to ₹110 in FY26. Special dividends (₹67 in FY23, ₹18 in FY24, ₹66 in FY25, ₹46 in FY26) cause most of the jumps. Regular payouts alone (interim plus final) grew steadily: ₹43, ₹48, ₹55, ₹60 and ₹64.</p>
+<div class="note">FY = April–March. Amounts are totals declared for each year, built from interim, special and final dividends in Business Today and exchange-based dividend tables. One portal lists FY26 as ₹109; the components add to ₹110. An interim dividend of ₹12 for FY27 has an ex-date of 14 Oct 2026.</div></section>
+
+<section id="growth" class="rv"><div class="ey">Future Growth</div><h2>Opportunities and Risks</h2>
+<div class="grid">
+<div class="card"><h3>Artificial Intelligence</h3><p class="s">Clients need help adopting generative AI. TCS can sell AI-led services and automation.</p></div>
+<div class="card"><h3>Cloud</h3><p class="s">Migration and management of enterprise workloads on public and hybrid cloud.</p></div>
+<div class="card"><h3>Digital Transformation</h3><p class="s">Modernising legacy systems, data platforms and customer-facing applications.</p></div>
+<div class="card"><h3>Cybersecurity</h3><p class="s">Rising cyber threats and regulation increase spending on security services.</p></div></div>
+<h3 style="margin-top:26px">Major business risks</h3>
+<div class="grid"><div class="card"><b class="dn">Demand slowdown</b><p class="s">Clients in the US and Europe may cut discretionary technology budgets.</p></div>
+<div class="card"><b class="dn">AI disruption</b><p class="s">AI tools could reduce billable effort in routine coding and support work.</p></div>
+<div class="card"><b class="dn">Competition & pricing</b><p class="s">Global and Indian rivals compete hard on large deals.</p></div>
+<div class="card"><b class="dn">Currency, talent, policy</b><p class="s">Rupee moves, wage costs, attrition and visa rules affect margins.</p></div></div></section>
+
+<section id="conclusion" class="rv"><div class="ey">Conclusion</div><h2>Balanced View</h2>
+<p class="lead"><b class="up">Positives:</b> a strong market position, a long dividend record, a lower P/E than earlier in 2026 and a high dividend yield of about 5%. <b class="dn">Concerns:</b> a share price down about 30% in a year, uncertain IT demand and the effect of AI on traditional services. The shares may suit investors who accept these risks, but this study is only a summary of public data and gives no advice to buy, hold or sell.</p>
+<div class="note"><b>For educational purposes only. Not investment advice.</b></div></section>
+
+<section id="sources" class="rv"><div class="ey">References</div><h2>Sources</h2>
+<div class="card"><p><b>Official sources (verify all figures here):</b></p><ul>
+<li><a class="ref" target="_blank" rel="noopener" href="https://www.tcs.com/investor-relations">TCS Investor Relations – tcs.com/investor-relations</a></li>
+<li><a class="ref" target="_blank" rel="noopener" href="https://www.nseindia.com/get-quotes/equity?symbol=TCS">NSE India – TCS equity quote</a></li>
+<li><a class="ref" target="_blank" rel="noopener" href="https://www.bseindia.com/stock-share-price/tata-consultancy-services-ltd/tcs/532540/">BSE India – Tata Consultancy Services (532540)</a></li></ul>
+<p style="margin-top:12px"><b>Secondary sources used for the data above (accessed 12 Oct 2026):</b></p><ul>
+<li>Yahoo Finance (TCS.NS) – 9 Oct 2026 close, 52-week range, P/E</li>
+<li>ICICI Direct, Tickertape, Kotak Neo – 9 Oct 2026 market cap, P/E, yield, returns</li>
+<li>Business Standard – 1 Jan and 14 Jan 2026 prices; Equentis – 28 Jan and 28 Apr 2026; Upstox – 26 May 2026, dividend table; Anand Rathi – 28 Aug 2026; IIFL – 4 Sep 2026</li>
+<li>Business Today – FY23–FY25 dividend breakdown; equitiesindia.com – dividend dates</li></ul>
+<button class="pri" onclick="print()" style="margin-top:14px">⬇ Print / Save A4 Report (PDF)</button></div></section>
+<footer>For educational purposes only. Not investment advice. · Data dated 9 Oct 2026 unless stated; may be delayed or revised.</footer>
+
+<!-- ============ A4 PRINT REPORT ============ -->
+<div id="report">
+<h1>Company Stock Analysis: Tata Consultancy Services (TCS)</h1>
+<p class="sub">Task 2 · Listed on NSE India (TCS) and BSE (532540) · Data as at 9 October 2026</p>
+<h2>1. Introduction and Company Overview</h2>
+<p>Tata Consultancy Services (TCS) is an Indian IT services and consulting company and part of the Tata Group. It offers IT services, consulting and business solutions to large companies around the world. Tata Sons owned about 71.7% of its shares at 31 March 2026. TCS listed in 2004. This report studies its share price, valuation and dividends using public data.</p>
+<h2>2. Share Price Trend</h2>
+<div class="chart" id="c1b"></div>
+<p>The chart uses dated prices from public sources (1 January to 9 October 2026). A full verified monthly series for 12 months was not available, so the lines join only the dated points. The price moved from about ₹3,225 on 1 January to ₹2,156 on 9 October, a fall of about 33.1% over this period. Portals report a one-year fall of roughly 29–31%. The 52-week range is ₹1,976.80 to ₹3,350.00. The reasons are not verified; commonly discussed ones are careful global technology spending and worry about AI reducing demand for routine IT work.</p>
+<h2>3. Financial Metrics</h2>
+<table><tr><th>Measure</th><th>Value</th><th>Date / source</th></tr>
+<tr><td>Latest share price</td><td>₹2,156.00</td><td>9 Oct 2026 close, NSE (Yahoo Finance)</td></tr>
+<tr><td>Market capitalisation</td><td>₹7,80,060 crore</td><td>9 Oct 2026 (ICICI Direct, Tickertape)</td></tr>
+<tr><td>P/E ratio (TTM)</td><td>15.09</td><td>ICICI Direct; Yahoo Finance 15.11</td></tr>
+<tr><td>Dividend yield</td><td>5.09%</td><td>ICICI Direct</td></tr></table>
+<p>A P/E of about 15 is lower than the 23.86 shown on 28 January 2026, so investors now pay less for each rupee of earnings.</p>
+<h2 class="pb">4. Dividend History (FY22 – FY26)</h2>
+<div class="c2"><div class="chart" id="c2b"></div><table id="dtb"></table></div>
+<p>Total dividends were ₹467 per share in five years (average ₹93.4). Special dividends explain the peaks in FY23, FY25 and FY26. Regular dividends rose each year, from ₹43 to ₹64. FY = April to March. Amounts are totals declared for the year (interim + special + final) from Business Today and exchange dividend tables.</p>
+<h2>5. Future Growth and Risks</h2>
+<ul><li><b>Opportunities:</b> AI services and automation, cloud migration, digital transformation of legacy systems, and cybersecurity.</li>
+<li><b>Risks:</b> slower client spending in the US and Europe; AI tools reducing routine work; strong competition and price pressure; currency, wage, attrition and visa-policy effects.</li></ul>
+<h2>6. Conclusion</h2>
+<p>TCS has a strong market position, a long dividend record and a lower valuation than earlier in 2026. However, its share price has fallen by about 30% in a year and IT demand is uncertain. The picture is mixed. This report only summarises public data and does not recommend any action.</p>
+<h2>7. References</h2>
+<ul><li>TCS Investor Relations: https://www.tcs.com/investor-relations</li>
+<li>NSE India: https://www.nseindia.com (TCS equity quote)</li>
+<li>BSE India: https://www.bseindia.com (Tata Consultancy Services, 532540)</li>
+<li>Secondary data: Yahoo Finance, ICICI Direct, Tickertape, Business Standard, Business Today, Upstox, Equentis (accessed 12 Oct 2026). Figures may be delayed; verify with official sources.</li></ul>
+<p><b>For educational purposes only. Not investment advice.</b></p>
+</div>
+
+<script>
+const P=[["2026-01-01",3225],["2026-01-14",3192.3],["2026-01-28",3200.1],["2026-04-28",2444.7],["2026-05-26",2276.2],["2026-08-28",2252],["2026-09-04",2304],["2026-10-09",2156]];
+const D=[["FY22",43],["FY23",115],["FY24",73],["FY25",126],["FY26",110]];
+const f=n=>n.toLocaleString('en-IN',{maximumFractionDigits:2}),T=d=>+new Date(d),$=s=>document.querySelector(s);
+const fd=d=>new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+function line(id){const el=$(id),W=700,H=320,L=56,R=16,t=16,b=34,x0=T(P[0][0]),x1=T(P[7][0]),lo=1800,hi=3400;
+const X=d=>L+(T(d)-x0)/(x1-x0)*(W-L-R),Y=v=>t+(hi-v)/(hi-lo)*(H-t-b);
+let g='',pts=P.map(p=>X(p[0])+','+Y(p[1])).join(' ');
+for(let v=1800;v<=3400;v+=400)g+=`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#8aa0c8" stroke-opacity=".2"/><text x="${L-8}" y="${Y(v)+4}" fill="#93a4c3" font-size="11" text-anchor="end">₹${v}</text>`;
+let xs='';["2026-01-01","2026-03-01","2026-05-01","2026-07-01","2026-09-01"].forEach(d=>xs+=`<text x="${X(d)}" y="${H-10}" fill="#93a4c3" font-size="11" text-anchor="middle">${new Date(d).toLocaleString('en',{month:'short'})}</text>`);
+const dots=P.map((p,i)=>`<circle class="dt" data-i="${i}" cx="${X(p[0])}" cy="${Y(p[1])}" r="5" fill="#08111F" stroke="#22D3EE" stroke-width="2.5" style="cursor:pointer"/>`).join('');
+el.innerHTML=`<svg viewBox="0 0 ${W} ${H}"><defs><linearGradient id="a${id.slice(1)}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B82F6" stop-opacity=".45"/><stop offset="1" stop-color="#3B82F6" stop-opacity="0"/></linearGradient><filter id="gl${id.slice(1)}"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>${g}${xs}
+<polygon points="${X(P[0][0])},${H-b} ${pts} ${X(P[7][0])},${H-b}" fill="url(#a${id.slice(1)})"/>
+<polyline points="${pts}" fill="none" stroke="#22D3EE" stroke-width="3" stroke-linejoin="round" filter="url(#gl${id.slice(1)})"/>${dots}</svg><div class="tip"></div>`;
+const tip=el.querySelector('.tip');el.querySelectorAll('.dt').forEach(c=>{c.onmouseenter=()=>{const p=P[c.dataset.i],r=c.getBoundingClientRect(),q=el.getBoundingClientRect();tip.innerHTML=`<b>${fd(p[0])}</b><br>₹${f(p[1])}`;tip.style.left=r.left-q.left-30+'px';tip.style.top=r.top-q.top-48+'px';tip.style.opacity=1;c.setAttribute('r',8)};c.onmouseleave=()=>{tip.style.opacity=0;c.setAttribute('r',5)}})}
+function bars(id){const el=$(id),W=420,H=300,L=40,t=22,b=30,mx=140,bw=48,gap=(W-L-bw*5)/5;
+let g='';[0,50,100].forEach(v=>{const y=t+(mx-v)/mx*(H-t-b);g+=`<line x1="${L}" x2="${W}" y1="${y}" y2="${y}" stroke="#8aa0c8" stroke-opacity=".2"/><text x="${L-6}" y="${y+4}" fill="#93a4c3" font-size="11" text-anchor="end">${v}</text>`});
+const r=D.map((d,i)=>{const h=d[1]/mx*(H-t-b),x=L+gap/2+i*(bw+gap),y=H-b-h;return `<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="8" fill="url(#bg${id.slice(1)})" style="filter:drop-shadow(0 0 8px #10B98188)"><title>${d[0]}: ₹${d[1]}</title></rect><text x="${x+bw/2}" y="${y-6}" fill="#10B981" font-size="12" font-weight="700" text-anchor="middle">₹${d[1]}</text><text x="${x+bw/2}" y="${H-10}" fill="#93a4c3" font-size="11" text-anchor="middle">${d[0]}</text>`}).join('');
+el.innerHTML=`<svg viewBox="0 0 ${W} ${H}"><defs><linearGradient id="bg${id.slice(1)}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#10B981"/><stop offset="1" stop-color="#3B82F6"/></linearGradient></defs>${g}${r}</svg>`}
+line('#c1');line('#c1b');bars('#c2');bars('#c2b');
+const s=P[0][1],e=P[7][1],ch=(e-s)/s*100;
+$('#tstat').innerHTML=[['Start (1 Jan 2026)','₹'+f(s)],['End (9 Oct 2026)','₹'+f(e)],['Change','<span class="dn">'+ch.toFixed(1)+'%</span>'],['52-week range','₹1,976.80 – 3,350']].map(a=>`<div><div class="k">${a[0]}</div><div class="v" style="font-size:22px">${a[1]}</div></div>`).join('');
+const sp=['','67','18','66','46'],reg=[43,48,55,60,64];
+const tb='<tr><th>FY</th><th>Total ₹</th><th>Regular ₹</th></tr>'+D.map((d,i)=>`<tr><td>${d[0]}</td><td>${d[1]}</td><td>${reg[i]}</td></tr>`).join('').replace('<tr><td>FY22</td><td>43</td><td>43</td></tr>','<tr><td>FY22</td><td>43</td><td>43</td></tr>')+'<tr><th>Total</th><th>467</th><th>270</th></tr>';
+$('#dt').innerHTML=tb;$('#dtb').innerHTML=tb;
+document.querySelectorAll('.rv').forEach(n=>new IntersectionObserver((a,o)=>a.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');o.disconnect()}}),{threshold:.08}).observe(n));
+$('#th').onclick=()=>{const h=document.documentElement;h.dataset.theme=h.dataset.theme=='dark'?'light':'dark'};
+</script></body></html>
